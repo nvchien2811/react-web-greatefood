@@ -13,6 +13,7 @@ import FullFood from './Component/FullFood';
 import Details from './Component/Details';
 import Login from './Component/Login';
 import SignUp from './Component/SignUp';
+import Cart from './Component/Cart';
 import FoodByMenu from './Component/FoodByMenu';
 import logofoot from './images/logo_foot1.jpg';
 import { IoLogoFacebook } from 'react-icons/io5';
@@ -215,7 +216,7 @@ export default function App() {
             </Nav.Link>
             {showLogin && <Nav.Link onClick={()=>window.scroll(0,0)} href="#action7" as={Link} to={"/login"} >Đăng nhập</Nav.Link>}
             {!showLogin && <Nav.Link onClick={()=>window.scroll(0,0)} href="#action7" onClick={()=>handleShow()} >{user} (Đăng xuất)</Nav.Link>}
-            <Nav.Link onClick={()=>window.scroll(0,0)} href="">Giỏ hàng</Nav.Link>
+            <Nav.Link onClick={()=>window.scroll(0,0)} href="/cart" as={Link} to={"/cart"}>Giỏ hàng</Nav.Link>
         </Nav>
         <Form className="d-flex">
           <FormControl
@@ -244,6 +245,9 @@ export default function App() {
           </Route>
           <Route path="/signup">
             <SignUp />
+          </Route>
+          <Route path="/cart">
+            <Cart />
           </Route>
           <Route path="/foodmenu">
             <FoodByMenu />

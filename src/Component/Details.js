@@ -3,7 +3,7 @@ import {
     useLocation,
     Link,
   } from "react-router-dom";
-import {Image,Button,Breadcrumb,Col,Row} from 'react-bootstrap';
+import {Image,Button,Breadcrumb,Col,Row,Modal} from 'react-bootstrap';
 import '../Css/Details.css';
 import ReactHtmlParser from 'react-html-parser';
 import {getPriceVND} from '../Contain/getPriceVND';
@@ -19,9 +19,9 @@ export default function Details (){
     const [iddanhmuc,setIddanhmuc] = useState('');
     const [tendanhmuc,setTendanhmuc] = useState('');
     const [dataFoodRalate, setdataFoodRalate] = useState([]);
-    const [soluong,setSoluong] = useState(1);
+    const [quanity,setquanity] = useState(1);
     const [status,setSatus] = useState(1);
-  
+    const [showModal, setshowModal] = useState(false);
 
     const localfoodmenu = {
         pathname:`/foodmenu/${"id="+iddanhmuc}`,
@@ -90,14 +90,64 @@ export default function Details (){
     })
     const handleCart = async()=>{
         const id = window.location.pathname.split("/details/id=")[1];
-        console.log(id+"+"+soluong)
+        // localStorage.removeItem('@cart');
+        let arrTmp = [];
+        const StringCartCurrent = await localStorage.getItem('@cart');
+        let arrCartCurrent = JSON.parse(StringCartCurrent);
+        if(arrCartCurrent!==null){
+        arrTmp = arrCartCurrent;
+        }
+        // console.log("arr cart current "+ JSON.stringify(arrCartCurrent));
+    
+        if(arrCartCurrent==null){
+            arrTmp = [{id:id,soluong:parseInt(quanity)}]
+        }else{
+            //check food avalilable 
+            let police = arrCartCurrent.some(x => x.id==id);
+            if(police==true){
+                //getPostion food current in arr
+                let index = arrTmp.findIndex(x=>x.id==id);
+                const currentAmount = parseInt(arrTmp[index].soluong) 
+                
+                //setNewAmount
+                let newAmount = currentAmount+parseInt(quanity);
+                console.log(typeof(currentAmount))
+                //setAmount
+                arrTmp[index].soluong = newAmount;
+            }else{
+                arrTmp = arrTmp.concat([{id:id,soluong:parseInt(quanity)}]);
+            }
+        }
+        console.log(arrTmp);
+        localStorage.setItem('@cart',JSON.stringify(arrTmp));
+        setquanity(1)
+        setshowModal(false)
     }
     useEffect(()=>{
         window.scroll(0,0);
         getMonan();
     },[location])
+    const ModalOrder = ()=>(
+        <div>
+            <Modal show={showModal} onHide={()=>setshowModal(false)}>
+            <Modal.Header closeButton>
+            <Modal.Title>Bạn có chắc chắn đặ món ăn này !</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>{`${tenmonan} với số lượng là ${quanity}`}</Modal.Body>
+            <Modal.Footer>
+            <Button variant="secondary" onClick={()=>setshowModal(false)}>
+                Đóng
+            </Button>
+            <Button variant="primary" onClick={handleCart}>
+                Chắc chắn
+            </Button>
+            </Modal.Footer>
+        </Modal>
+      </div>
+    )
     return(
         <div className="wrapper">
+            {ModalOrder()}
             <Breadcrumb style={{ paddingRight: 40 }}>
             <Breadcrumb.Item  >
             <Link to={"/home"}>Trang chủ</Link>
@@ -122,9 +172,9 @@ export default function Details (){
                 <input 
                     type="number"
                     style={{width:100,height:30,marginLeft:10}}
-                    value={soluong}
+                    value={quanity}
                     placeholder="Nhập số lượng món ăn"
-                    onChange={(e)=>setSoluong(e.target.value)}
+                    onChange={(e)=>setquanity(e.target.value)}
                     min={1} max={20}
                 />
             </div>
@@ -133,7 +183,7 @@ export default function Details (){
             </div>
             <div style={{ paddingTop:20 }}>
                 {status==0?
-                 <Button onClick={handleCart}> Đặt món</Button>
+                 <Button onClick={()=>setshowModal(true)}> Đặt món</Button>
                  :
                  <Button style={{ cursor:'not-allowed' }} disabled> Hết món</Button>
                 }
