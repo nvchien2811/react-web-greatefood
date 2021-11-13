@@ -24,6 +24,8 @@ import HomeAdmin from './Admin/HomeAdmin' ;
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import bgfooter from './images/bg-footer.jpg';
 import * as FetchAPI from './Utils/FetchAPI';
+import {link} from './Utils/Link';
+
 export default function App() {
   var [showLogin,setshowLogin] = useState(true);
   var [user,setUser] = useState('');
@@ -34,6 +36,7 @@ export default function App() {
   const handleClose = () => setShowLogut(false);
   const handleShow = () => setShowLogut(true);
   const [top,setTop] = useState(true);
+  
   
   useEffect(()=>{
     //Scroll navbar 
@@ -63,48 +66,19 @@ export default function App() {
   // },[]) 
 
 
-  function getUser(token){
-    fetch("http://192.168.43.25/DemoJWT/checkToken.php", {
-      method:"POST",
-      headers: {
-          "Accept":"application/json",
-          "Content-Type":"application/json"
-          },
-      body: JSON.stringify({
-          "token" : token,
-       })
-    })
-    .then((reponse)=> reponse.json())
-    .then((reponseJson)=>{
-        getInfor(reponseJson.id);
-    })
-    .catch((err)=>{
-        console.log(err)
-      })
+  async function getUser(token){
+    const res = await FetchAPI.postDataApi(link+"checkToken.php",{"token":token})
+    getInfor(res.id);
+
   }
-  function getInfor(id) {
-    fetch("http://192.168.43.25/DemoJWT/getUserById.php",{
-      method:"POST",
-      headers: {
-          "Accept":"application/json",
-          "Content-Type":"application/json"
-          },
-      body: JSON.stringify({
-          "ID" : id,
-       })
-    })
-    .then((reponse)=>reponse.json())
-    .then((reponseJson)=>{
-       setUser(reponseJson.HoTen);
-       console.log("Tên của khách" , reponseJson.HoTen)
-    })
-    .catch((err)=>{
-        console.log(err);
-    })
+  async function getInfor(id) {
+    const res = await FetchAPI.postDataApi(link+"getUserById.php",{"ID":id})
+    setUser(res.HoTen);
+    console.log("Tên của khách" , res.HoTen)
   }
   function getDanhmuc(){
     let item = [];
-    fetch('http://192.168.43.25/DemoJWT/getdanhmuc.php')
+    fetch(link+'getdanhmuc.php')
     .then((reponse)=> reponse.json())
     .then((reponseJson)=>{
        
@@ -117,7 +91,7 @@ export default function App() {
             }
           }
           item.push(
-            <NavDropdown.Item href={"#foodmenu"+reponseJson[i].iddanhmuc} onClick={()=>{refreshPage()}}  as={Link} to={locafoodmenu}>{reponseJson[i].tendanhmuc}</NavDropdown.Item>
+            <NavDropdown.Item href={"#foodmenu"+reponseJson[i].iddanhmuc} as={Link} to={locafoodmenu}>{reponseJson[i].tendanhmuc}</NavDropdown.Item>
           )
         };
     })
@@ -241,7 +215,7 @@ export default function App() {
             </Nav.Link>
             {showLogin && <Nav.Link onClick={()=>window.scroll(0,0)} href="#action7" as={Link} to={"/login"} >Đăng nhập</Nav.Link>}
             {!showLogin && <Nav.Link onClick={()=>window.scroll(0,0)} href="#action7" onClick={()=>handleShow()} >{user} (Đăng xuất)</Nav.Link>}
-            <Nav.Link onClick={()=>window.scroll(0,0)} href="">Ứng dụng di động</Nav.Link>
+            <Nav.Link onClick={()=>window.scroll(0,0)} href="">Giỏ hàng</Nav.Link>
         </Nav>
         <Form className="d-flex">
           <FormControl

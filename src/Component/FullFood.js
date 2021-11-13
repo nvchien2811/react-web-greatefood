@@ -88,7 +88,7 @@ export default function FullFood() {
 
     return(
        
-        <div style={{ display:'flex',flexDirection:'column'}}>
+        <div style={{ display:'flex',flexDirection:'column',minHeight:800}}>
             <Breadcrumb style={{ paddingLeft:40, paddingTop:20, paddingRight: 40 }}>
             <Breadcrumb.Item  >
             <Link to={"/home"}>Trang chủ</Link>

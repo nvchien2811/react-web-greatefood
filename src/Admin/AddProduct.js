@@ -1,5 +1,5 @@
 import React,{useState,useRef,useEffect} from 'react';
-import {Form,Row,Button,Card,Modal} from 'react-bootstrap';
+import {Form,Row,Button,Modal} from 'react-bootstrap';
 import Select from 'react-select';
 import axios from 'axios';
 import {FcApproval} from 'react-icons/fc';
@@ -23,7 +23,7 @@ export default function AddProduct(){
     const [statusPriceInt,setStatusPriceInt] = useState(false);
     const [showSuccess, setShowSucess] = useState(false);
     const handleClose = () => setShowSucess(false);
-    const handleShow = () => setShowSucess(true);
+    // const handleShow = () => setShowSucess(true);
     const [dataEditor,setDataEditor] = useState("");
 
     useEffect(()=>{

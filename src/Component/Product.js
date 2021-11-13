@@ -37,9 +37,11 @@ export default function Product(props){
               <Col  sm={12} md={6} >
                 <Button as={Link} to={{ pathname:`/details/${"id="+props.id}`,state:{id:props.id} }} style={{ width:'100%',marginTop:5 ,marginBottom:5}} variant="primary">Xem chi tiết</Button>
               </Col >
+              {!props.hideOrder &&
               <Col  sm={12} md={6}>
                 <Button style={{ width:'100%',marginTop:5 ,marginBottom:5,...cssOutStock}} variant="primary" disabled={props.status==1}>Đặt ngay</Button>
               </Col>
+              }
           </Row>
       </Container>
     )

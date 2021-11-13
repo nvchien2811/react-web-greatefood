@@ -22,7 +22,7 @@ export default function FoodByMenu(){
         let i = link.indexOf('id=');
         let kq = link.slice(i+3,link.length);
         getMonAn(kq);  
-    },[])
+    },[location])
     async function getMonAn(id){
         try {
             const data = {

@@ -83,15 +83,19 @@ export default function Details (){
                 hinhanh={item.hinhanh}
                 gia={getPriceVND(item.gia)+" đ / 1 phần"}
                 id={item.id}
+                hideOrder={true}
             />
             </div>   
         )
     })
+    const handleCart = async()=>{
+        const id = window.location.pathname.split("/details/id=")[1];
+        console.log(id+"+"+soluong)
+    }
     useEffect(()=>{
         window.scroll(0,0);
         getMonan();
-        
-    },[])
+    },[location])
     return(
         <div className="wrapper">
             <Breadcrumb style={{ paddingRight: 40 }}>
@@ -114,16 +118,24 @@ export default function Details (){
                 <p><b>Giá :</b> {getPriceVND(gia)+'đ / 1 phần'}</p>
             </div>
             <div style={{ display:'flex',flexDirection:'row' }}>
-                <p><b>Số lượng :</b> {soluong}</p>
+                <p><b>Số lượng :</b> </p> 
+                <input 
+                    type="number"
+                    style={{width:100,height:30,marginLeft:10}}
+                    value={soluong}
+                    placeholder="Nhập số lượng món ăn"
+                    onChange={(e)=>setSoluong(e.target.value)}
+                    min={1} max={20}
+                />
             </div>
             <div style={{ display:'flex',flexDirection:'row',overflow:'auto' }}>
                 <p><b>Mô tả:</b> {ReactHtmlParser(mota)}</p>
             </div>
             <div style={{ paddingTop:20 }}>
                 {status==0?
-                 <Button> Đặt món</Button>
+                 <Button onClick={handleCart}> Đặt món</Button>
                  :
-                 <Button style={{ cursor:'not-allowed' }} disabled> Đặt món</Button>
+                 <Button style={{ cursor:'not-allowed' }} disabled> Hết món</Button>
                 }
                
             </div>
