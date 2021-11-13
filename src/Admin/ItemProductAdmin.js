@@ -24,9 +24,9 @@ export default function ItemProductAdmin(props){
             <Col  sm={12} md={6} >
               <Button as={Link} onClick={()=>{props.shownModal();props.setArr()}} style={{ width:'100%',marginTop:5 ,marginBottom:5}} variant="primary">Chỉnh sửa</Button>
             </Col >
-            <Col  sm={12} md={6}>
+            {/* <Col  sm={12} md={6}>
               <Button style={{ width:'100%',marginTop:5 ,marginBottom:5}} variant="danger">Xóa món ăn</Button>
-            </Col>
+            </Col> */}
         </Row>
     </Container>
     )
