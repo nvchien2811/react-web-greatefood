@@ -2,14 +2,16 @@ import React,{useEffect,useState} from 'react';
 import {
     useLocation,
     Link,
+    useHistory
   } from "react-router-dom";
-import {Image,Button,Breadcrumb,Col,Row,Modal} from 'react-bootstrap';
+import {Image,Button,Breadcrumb,Col,Row,Modal,Toast} from 'react-bootstrap';
 import '../Css/Details.css';
 import ReactHtmlParser from 'react-html-parser';
 import {getPriceVND} from '../Contain/getPriceVND';
 import * as FetchAPI from '../Utils/FetchAPI';
 import {link} from '../Utils/Link';
 import Product from './Product';
+import icon_success from '../images/success-24.png';
 export default function Details (){
     let location = useLocation();
     const [tenmonan,setTenmonan] = useState('');
@@ -22,6 +24,8 @@ export default function Details (){
     const [quanity,setquanity] = useState(1);
     const [status,setSatus] = useState(1);
     const [showModal, setshowModal] = useState(false);
+    const [showToast, setshowToast] = useState(false);
+    const history = useHistory();
 
     const localfoodmenu = {
         pathname:`/foodmenu/${"id="+iddanhmuc}`,
@@ -122,11 +126,13 @@ export default function Details (){
         localStorage.setItem('@cart',JSON.stringify(arrTmp));
         setquanity(1)
         setshowModal(false)
+        setshowToast(true)
     }
     useEffect(()=>{
         window.scroll(0,0);
         getMonan();
     },[location])
+  
     const ModalOrder = ()=>(
         <div>
             <Modal show={showModal} onHide={()=>setshowModal(false)}>
@@ -148,6 +154,23 @@ export default function Details (){
     return(
         <div className="wrapper">
             {ModalOrder()}
+            <div style={{ position:'fixed',right:50,top:80 }}>
+                <Toast onClose={() => setshowToast(false)} show={showToast} delay={3000} autohide>
+                <Toast.Header style={{ display:'flex',justifyContent:'space-between' }} closeButton>
+                    <strong className="me-auto">Great Food</strong>
+                </Toast.Header>
+                <Toast.Body style={{ display:'flex',flexDirection:'row' }}>
+                    <Image src={icon_success} width={60} height={60}/>
+                    <div  style={{ display:'flex',flexDirection:'column',paddingLeft:10 }}>
+                        <span>Bạn đã đặt món thành công!</span>
+                        <span>Đi đến giỏ hàng ngay</span>
+                        <div style={{ display:'flex',justifyContent:'flex-end',marginTop:10 }}>
+                        <Button onClick={() =>history.push("/cart")} >Đi ngay</Button>
+                        </div>
+                    </div>
+                </Toast.Body>
+                </Toast>
+            </div>
             <Breadcrumb style={{ paddingRight: 40 }}>
             <Breadcrumb.Item  >
             <Link to={"/home"}>Trang chủ</Link>

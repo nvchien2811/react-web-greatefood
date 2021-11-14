@@ -1,14 +1,17 @@
 import React ,{useState,useEffect}from 'react';
 import {link} from '../Utils/Link';
-import {Image,Row,Col,Button,Modal} from 'react-bootstrap'
+import {Image,Row,Col,Button,Modal,Toast} from 'react-bootstrap'
 import * as FetchAPI from '../Utils/FetchAPI';
 import {getPriceVND} from '../Contain/getPriceVND';
+import icon_success from '../images/success-24.png';
+
 export default function Cart(){
     const [dataCart, setdataCart] = useState([]);
     const [showCartEmpty, setshowCartEmpty] = useState(false);
     const [showContent, setshowContent] = useState();
     const [total, settotal] = useState();
     const [showModalPayment, setshowModalPayment] = useState(false);
+    const [showToast, setshowToast] = useState(false);
     useEffect(()=>{
         getCart()
     },[])
@@ -92,7 +95,7 @@ export default function Cart(){
         if(res.result=="successfully"){
             await localStorage.removeItem('@cart');
             getDataCart([]);
-            window.alert("Thành công !!!!")
+            setshowToast(true)
             setshowModalPayment(false)
         }else{
             setshowModalPayment(false)
@@ -155,6 +158,21 @@ export default function Cart(){
         <div style={{ minHeight:500 }}>
             {showContent && 
                 <div>
+                    <div style={{ position:'fixed',right:50,top:80 }}>
+                            <Toast onClose={() => setshowToast(false)} show={showToast} delay={3000} autohide>
+                            <Toast.Header style={{ display:'flex',justifyContent:'space-between' }} closeButton>
+                                <strong className="me-auto">Great Food</strong>
+                            </Toast.Header>
+                            <Toast.Body style={{ display:'flex',flexDirection:'row' }}>
+                                <Image src={icon_success} width={60} height={60}/>
+                                <div  style={{ display:'flex',flexDirection:'column',paddingLeft:10 }}>
+                                    <span>Cảm ơn bạn đã thanh toán!</span>
+                                    <span>Đơn hàng của bạn đã được ghi nhận</span>
+                                   
+                                </div>
+                            </Toast.Body>
+                            </Toast>
+                    </div>
                     {showCartEmpty ? 
                     <div style={{ display:'flex',flex:1,justifyContent:'center',alignItems:'center',height:500 }}>
                         Giỏ hàng của bạn đang trống....
@@ -162,11 +180,11 @@ export default function Cart(){
                     :
                     <div>
                         {ModalPayment()}
-                        <Row>
+                        <Row style={{ margin:0 }}>
                             <Col xl={6} lg={6} md={6} xs={12} style={{ padding:20 }}>
                                 {ItemProduct}
                             </Col>
-                            <Col xl={6} lg={6} md={6} xs={12} style={{ padding:20 }}>
+                            <Col xl={6} lg={6} md={6} xs={12} style={{ padding:20}}>
                                 {Summary()}
                             </Col>
                         </Row>
