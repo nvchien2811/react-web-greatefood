@@ -17,6 +17,15 @@
     text-align: center;
     font-weight: bold;
 }
+.trdanhmuc > td{
+    border-bottom: 1px solid black;
+
+}
+.trdanhmuc > td{
+    width: 10%;
+    text-align: center;
+    font-weight: bold;
+}
 .trDetails{
     height: 50px;
     box-shadow: 0px 1px 5px #00000026;
@@ -32,6 +41,9 @@
     width: 100%;
 }
 .tablehoadon > tr:nth-child(even){
+    background: rgb(238, 238, 238)
+}
+.tabledanhmuc > tr:nth-child(even){
     background: rgb(238, 238, 238)
 }
 .btn-an{

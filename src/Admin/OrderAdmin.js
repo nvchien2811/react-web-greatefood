@@ -105,20 +105,9 @@ export default function OrderAdmin(){
             />
         )
     },[]);
-    function handleUpdateStatis(){
-        fetch("http://192.168.43.25/DemoJWT/updatethongke.php",{
-            method:'POST',
-            headers:{
-                "Accept":"application/json",
-                "Content-Type":"application/json"
-            },
-            body: JSON.stringify({
-                "IDHOADON":idhoadon
-            })
-        })
-        .then((response)=>response.json())
-        .then((responseJson)=>{})
-        .catch((err)=>{console.log(err)});
+    async function handleUpdateStatis(){
+        const res = await FetchAPI.postDataApi(link+"updatethongke.php",{"IDHOADON":idhoadon})
+        console.log(res)
     }
     async function HandlePayment(){
         try {

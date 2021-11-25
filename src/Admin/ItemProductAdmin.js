@@ -1,6 +1,7 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
 import {Row,Container,Col,Button,Image} from 'react-bootstrap';
+import setHTTP from '../Utils/setHTTP';
 export default function ItemProductAdmin(props){
     return(
         <Container className="itemProduct thumbnail">
@@ -10,7 +11,7 @@ export default function ItemProductAdmin(props){
                 <h4>Hết hàng</h4>
             </div>
             }
-           <Image  style={{ height:200, width:'60%',paddingBottom:5,paddingTop:10 }} src={props.hinhanh}></Image>
+           <Image  style={{ height:200, width:'60%',paddingBottom:5,paddingTop:10 }} src={setHTTP(props.hinhanh)}></Image>
         </Row>
         <Row >
             <Col className="text-right" style={{ fontWeight:'bold' }} lg={5} xs={5}>Tên món ăn </Col>

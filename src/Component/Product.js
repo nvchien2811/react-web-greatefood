@@ -5,7 +5,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import {
     Link
   } from "react-router-dom";
-  
+import setHTTP from '../Utils/setHTTP';
 export default function Product(props){
     const [cssOutStock, setcssOutStock] = useState();
     useEffect(()=>{
@@ -23,7 +23,7 @@ export default function Product(props){
                     <h6>Món ăn tạm thời hết hàng.<br/> Mong quý khách thông cảm...</h6>
                 </div>
               }
-             <Image  style={{ height:200, width:'60%',paddingBottom:5,paddingTop:10 }}  src={props.hinhanh}></Image>
+             <Image  style={{ height:200, width:'60%',paddingBottom:5,paddingTop:10 }}  src={setHTTP(props.hinhanh)}></Image>
           </Row>
           <Row >
               <Col className="text-right" style={{ fontWeight:'bold' }} lg={5} xs={5}>Tên món ăn :</Col>

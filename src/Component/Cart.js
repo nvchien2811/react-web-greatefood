@@ -4,7 +4,7 @@ import {Image,Row,Col,Button,Modal,Toast} from 'react-bootstrap'
 import * as FetchAPI from '../Utils/FetchAPI';
 import {getPriceVND} from '../Contain/getPriceVND';
 import icon_success from '../images/success-24.png';
-
+import setHTTP from '../Utils/setHTTP';
 export default function Cart(){
     const [dataCart, setdataCart] = useState([]);
     const [showCartEmpty, setshowCartEmpty] = useState(false);
@@ -105,7 +105,7 @@ export default function Cart(){
         return(
             <div style={{ boxShadow:"2px 2px 10px #00000026",margin:"10px 0px",flexDirection:'row',display:'flex',padding:10 }}>
                 <div>
-                    <Image src={item.hinhanh} width={150} height={120}/>
+                    <Image src={setHTTP(item.hinhanh)} width={150} height={120}/>
                 </div>
                 <div style={{ display:'flex',flexDirection:'column',marginLeft:20,justifyContent:'space-around' }}>
                     <span style={{ fontWeight:'bold' }}>{item.ten}</span>

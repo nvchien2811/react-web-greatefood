@@ -2,14 +2,14 @@ import React from 'react'
 import {Row,Col,Image} from 'react-bootstrap';
 import '../Css/FullFood.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-
+import setHTTP from '../Utils/setHTTP';
 export default function ItemProductBill(props){
     
     return (
         <div className="itemProduct thumbnail" style={{ width:'100%',paddingLeft:20,marginLeft:20,marginBottom:20 }}>
         <Row >
             <Col style={{ justifyContent:'center',display:'flex' }} sm={3}>
-            <Image className="imgBill" style={{ height:100, width:100,paddingBottom:5,paddingTop:10 }}  src={props.hinhanh}></Image>
+            <Image className="imgBill" style={{ height:100, width:100,paddingBottom:5,paddingTop:10 }}  src={setHTTP(props.hinhanh)}></Image>
             </Col>
             <Col style={{display:'flex',justifyContent:'center',flexDirection:'column' }} className="justify-content-center" sm={9}>
             <Row>

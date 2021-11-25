@@ -18,7 +18,7 @@ import {FaReceipt} from 'react-icons/fa';
 import {GoGraph} from 'react-icons/go';
 import {BiLogOut,BiMoney,BiDish} from 'react-icons/bi';
 import {TiThMenu} from 'react-icons/ti'
-
+import AddMenu from './AddMenu';
 function updateSize() {
     // setSize([window.innerWidth, window.innerHeight]);
     let navAdmin = document.getElementsByClassName('navbar-admin')[0];
@@ -161,9 +161,13 @@ export default function HomeAdmin(){
                             <Route path="/homeadmin/statis">
                                 <StatisAdmin/>
                             </Route>
+                            <Route path="/homeadmin/addMenu">
+                                <AddMenu />
+                            </Route>
                             <Route path="/homeadmin">
                                 <StatisAdmin/>
                             </Route>
+                            
                         </Switch>
                         
                 </div>

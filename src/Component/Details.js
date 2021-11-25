@@ -12,6 +12,7 @@ import * as FetchAPI from '../Utils/FetchAPI';
 import {link} from '../Utils/Link';
 import Product from './Product';
 import icon_success from '../images/success-24.png';
+import setHTTP from '../Utils/setHTTP';
 export default function Details (){
     let location = useLocation();
     const [tenmonan,setTenmonan] = useState('');
@@ -137,7 +138,7 @@ export default function Details (){
         <div>
             <Modal show={showModal} onHide={()=>setshowModal(false)}>
             <Modal.Header closeButton>
-            <Modal.Title>Bạn có chắc chắn đặ món ăn này !</Modal.Title>
+            <Modal.Title>Bạn có chắc chắn đặt món ăn này !</Modal.Title>
             </Modal.Header>
             <Modal.Body>{`${tenmonan} với số lượng là ${quanity}`}</Modal.Body>
             <Modal.Footer>
@@ -185,7 +186,7 @@ export default function Details (){
             <span><h3>{tenmonan}</h3></span>
             </div>
             <div>
-                <Image className="imgd" src={hinhanh}/>
+                <Image className="imgd" src={setHTTP(hinhanh)}/>
             </div>
             <div style={{ display:'flex',flexDirection:'row' }}>
                 <p><b>Giá :</b> {getPriceVND(gia)+'đ / 1 phần'}</p>
